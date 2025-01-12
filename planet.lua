@@ -4,15 +4,13 @@ Planet.__index = Planet
 local Satellite = require("satellite")
 
 -- Constructor for a new planet
-function Planet.new(centerX, centerY, sma, t, parentBody)
+function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
+    assert(type(ecc) == "number", "Eccentricity (ecc) must be a number")
     local self = setmetatable({}, Planet)
 
-    self.originX = centerX
-    self.originY = centerY
-
     self.angle = math.random(0, 360)
-    self.semiMajorAxis = sma -- Between 50 and 1000
-    self.semiMinorAxis = self.semiMajorAxis
+    self.semiMajorAxis = smaj -- Between 50 and 1000
+    self.semiMinorAxis = smaj * math.sqrt(1 - ecc^2) -- Initially circular
 
     self.type = t
 
@@ -36,32 +34,32 @@ function Planet.new(centerX, centerY, sma, t, parentBody)
     }
 
     local densityFactors = {
-        star = 2,
-        superJupiter = 2,
-        jupiter = 2,
-        subJupiter = 2,
+        star = 1.572,
+        superJupiter = 1.64,
+        jupiter = 1.64,
+        subJupiter = 1.64,
         superNeptune = 1.5,
         neptune = 1.5,
         subNeptune = 1.5,
         superEarth = 1,
         earth = 1,
-        subEarth = 1,
+        subEarth = 1.15,
         superMercury = 1,
         mercury = 1,
         subMercury = 1, 
-        superPluto = 1,
-        pluto =  1,
-        subPluto = 1,
+        superPluto = 1.43,
+        pluto =  1.43,
+        subPluto = 1.43,
     }
 
     self.mass = masses[self.type]
     self.radius = self.mass^(1/3) * densityFactors[self.type]
     self.speed = 1 / self.semiMajorAxis
     self.temperature = nil
-    --Surface T = Base T * albedo factor * greenhouse factor. With Base temperature being T = 255 / ( distance in Au / L^0.5 )^0.5
 
-    -- Types: star, superJupiter, jupiter, subJupiter, superNeptune, neptune, subNeptune, superEarth, earth, subEarth, superMercury, mercury, subMercury, superPluto, pluto, subPluto
-    -- Rarer types: chthonia, hycea, heliumGiant, ammoniaTerra
+    local c = math.sqrt(self.semiMajorAxis^2 - self.semiMinorAxis^2)
+    self.originX = centerX + c -- Adjust to place the center at one focus
+    self.originY = centerY
 
     local colors = {
         star = {1,1,0,1},
@@ -75,7 +73,6 @@ function Planet.new(centerX, centerY, sma, t, parentBody)
         earth = {0.05,0.5,0.8,1},
         subEarth = {0.05,0.5,0.8,1},
         superMercury = {1,1,1,0.8},
-
         mercury = {1,1,1,0.8},
         subMercury = {1,1,1,0.8}, 
         superPluto = {0.4,0.6,0.1,1},
@@ -203,12 +200,6 @@ function Planet:draw(camera)
     love.graphics.setColor(self.color)
     love.graphics.circle("fill", self.x, self.y, adjustedRadius)
     love.graphics.setColor(1,1,1,1)
-    love.graphics.print("Surface Composition:", 10, 10)
-    local y = 30
-    for element, percentage in pairs(self.composition) do
-        love.graphics.print(element .. ": " .. percentage .. "%", 10, y)
-        y = y + 20
-    end
 end
 
 return Planet

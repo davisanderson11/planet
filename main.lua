@@ -12,29 +12,31 @@ function love.load()
     love.window.setMode(windowWidth, windowHeight, {resizable = true, borderless = false})
 
     -- Add the central star
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.000001, "star", {1, 1, 0, 1}, {1,0.8,0,1}))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.000001, 0, "star", {1, 1, 0, 1}, {1,0.8,0,1}))
 
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.3 * 23455, "mercury"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.76 * 23455, "mercury"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1 * 23455, "earth"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1.8 * 23455, "earth"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 2.6 * 23455, "subEarth"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 4.3 * 23455, "subJupiter"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 7.1 * 23455, "jupiter"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 12.3 * 23455, "superNeptune"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 20 * 23455, "neptune"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.387 * 23455, 0.206, "mercury"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.723 * 23455, 0.006, "earth"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1 * 23455, 0.017, "earth"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1.523 * 23455, 0.093, "subEarth"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 2.77 * 23455, 0.079, "subEarth"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 5.203 * 23455, 0.049, "jupiter"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 9.583 * 23455, 0.057, "subJupiter"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 19.191 * 23455, 0.047, "neptune"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 30.07 * 23455, 0.009, "neptune"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 39.482 * 23455, 0.249, "pluto"))
+
 
     -- Add moons to specific planets
     local function addMoons(parentIndex, numMoons)
         local parentPlanet = planets[parentIndex]
         for i = 1, numMoons do
             local semiMajorAxis = math.random(50, 200) -- Smaller orbit for a moon
-            table.insert(planets, Planet.new(parentPlanet.x, parentPlanet.y, semiMajorAxis, "subMercury", parentIndex))
+            table.insert(planets, Planet.new(parentPlanet.x, parentPlanet.y, semiMajorAxis, 0, "subMercury", parentIndex))
         end
     end
 
-    addMoons(3, 2)  -- Planet 3 gets 2 moons
-    addMoons(5, 1)  -- Planet 5 gets 1 moon
+    addMoons(4, 1)  -- Planet 3 gets 2 moons
+    addMoons(5, 2)  -- Planet 5 gets 1 moon
     addMoons(7, 5)  -- Planet 7 gets 5 moons
     addMoons(8, 6)  -- Planet 8 gets 6 moons
     addMoons(9, 2)  -- Planet 9 gets 2 moons
