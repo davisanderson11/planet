@@ -1,5 +1,5 @@
-local Planet = require("planet")
-local Camera = require("camera")
+local Planet = require("main/planet")
+local Camera = require("main/camera")
 local PlanetMenu = require("menu/planet_menu")
 local MainMenu = require("menu/main_menu")
 
