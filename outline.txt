@@ -1,8 +1,6 @@
 ---To-do---
 
 -Soon-
-Finish planet constructor and add all resource types
-Better math.random() implementation
 Main menu
 Simulation speed controls
 Add starry sky background :)

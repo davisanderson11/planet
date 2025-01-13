@@ -8,6 +8,7 @@ local camera = Camera.new()
 function love.load()
     window = {translateX = 40, translateY = 40, scale = 1, windowWidth = 1920, windowHeight = 1080}
     love.window.setMode(windowWidth, windowHeight, {resizable = true, borderless = false})
+    math.randomseed(os.time())
 
     -- Add the central star and planets
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.000001, 0, "star"))
