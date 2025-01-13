@@ -27,17 +27,17 @@ Planet.__index = Planet
         subPlutonia = {0.0001, 1.43, 50, {Carbon = 70, Nitrogen = 10, Water = 20}},
 
         sol = {333, 1.572, 1.5, {Hydrogen = 70, Helium = 30}},
-        mercury = {0.0055, 1, 12, {Hydrogen = 90, Helium = 10}},
-        venus = {0.0815, 1, 12, {Hydrogen = 90, Helium = 9, Carbon = 1}},
-        earth = {0.1, 1, 12, {Hydrogen = 89, Helium = 9, Carbon = 1, Nitrogen = 1}},
-        mars = {0.00107, 1.5, 12, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-        ceres = {0.000016, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        jupiter = {31.7906, 1, 2, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        saturn = {9.516, 1.15, 2, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        uranus = {1.454, 1, 5, {Iron = 30, Silicon = 68, RareMetals = 2}},
-        neptune = {1.715, 1, 5, {Iron = 30, Silicon = 68, RareMetals = 2}},
-        pluto = {0.00022, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
-        eris = {0.00027, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}},
+        mercury = {0.0055, 1, 25, {Iron = 30, Silicon = 68, RareMetals = 2}},
+        venus = {0.0815, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
+        earth = {0.1, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+        mars = {0.00107, 1.5, 20, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
+        ceres = {0.000016, 1, 90, {Carbon = 70, Nitrogen = 10, Water = 20}},
+        jupiter = {31.7906, 1, 2, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
+        saturn = {9.516, 1.15, 2, {Hydrogen = 90, Helium = 10}},
+        uranus = {1.454, 1, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+        neptune = {1.715, 1, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+        pluto = {0.00022, 1.43, 30, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
+        eris = {0.00027, 1.43, 30, {Carbon = 70, Nitrogen = 10, Water = 20}},
     }
 
 -- Constructor for a new planet
