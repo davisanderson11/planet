@@ -27,10 +27,10 @@ Planet.__index = Planet
         subPlutonia = {0.0001, 1.43, 50, {Carbon = 70, Nitrogen = 10, Water = 20}},
 
         sol = {333, 1.572, 1.5, {Hydrogen = 70, Helium = 30}},
-        mercury = {0.0055, 1, 25, {Iron = 30, Silicon = 68, RareMetals = 2}},
+        mercury = {0.0055, 1, 20, {Iron = 30, Silicon = 68, RareMetals = 2}},
         venus = {0.0815, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
         earth = {0.1, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        mars = {0.00107, 1.5, 20, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
+        mars = {0.00107, 1.5, 25, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
         ceres = {0.000016, 1, 90, {Carbon = 70, Nitrogen = 10, Water = 20}},
         jupiter = {31.7906, 1, 2, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
         saturn = {9.516, 1.15, 2, {Hydrogen = 90, Helium = 10}},
@@ -53,7 +53,7 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     self.mass = planetData[self.type][MASS]
     self.radius = self.mass^(1/3) * planetData[self.type][DENSITYFACTOR]
     self.speed = 1 / self.semiMajorAxis
-    self.temperature = nil
+    self.temperature = (((255 / ((self.semiMajorAxis / 235)/110000^0.5))^0.5) * 1 * 1) - 273.15 -- Multiplied by albedo factor and greenhouse factor (TODO)
 
     local c = math.sqrt(self.semiMajorAxis^2 - self.semiMinorAxis^2)
     self.originX = centerX + c -- Adjust to place the center at one focus

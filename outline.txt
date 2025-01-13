@@ -4,7 +4,6 @@
 Main menu
 Simulation speed controls
 Add starry sky background :)
-Planet info screen
 Planet texture generation
 
 -Later-

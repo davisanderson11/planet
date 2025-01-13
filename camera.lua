@@ -42,9 +42,9 @@ function Camera:wheelmoved(x, y)
     local worldY = (self.mouseY - self.offsetY) / self.scale
 
     -- Adjust zoom level
-    if y > 0 then
+    if y < 0 then
         self.scale = self.scale / 1.1
-    elseif y < 0 then
+    elseif y > 0 then
         self.scale = self.scale * 1.1
     end
 

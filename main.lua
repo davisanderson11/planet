@@ -1,18 +1,19 @@
 local Planet = require("planet")
 local Camera = require("camera")
+local PlanetMenu = require("menus/planet_menu")
 
 local windowWidth, windowHeight = love.graphics.getDimensions()
 planets = {}
 local camera = Camera.new()
 
 function love.load()
+    -- Set up window
     window = {translateX = 40, translateY = 40, scale = 1, windowWidth = 1920, windowHeight = 1080}
     love.window.setMode(windowWidth, windowHeight, {resizable = true, borderless = false})
     math.randomseed(os.time())
 
-    -- Add the central star and planets
+    -- Add planets
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.000001, 0, "sol"))
-
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.387 * 235, 0.206, "mercury"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.723 * 235, 0.006, "venus"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1 * 235, 0.017, "earth"))
@@ -24,14 +25,6 @@ function love.load()
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 30.07 * 235, 0.009, "neptune"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 39.482 * 235, 0.249, "pluto"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 67.864 * 235, 0.436, "eris"))
-
-    local function addMoons(parentIndex, numMoons)
-        local parentPlanet = planets[parentIndex]
-        for i = 1, numMoons do
-            local semiMajorAxis = math.random(0.5, 2)
-            table.insert(planets, Planet.new(parentPlanet.x, parentPlanet.y, semiMajorAxis, 0, "subMercury", parentIndex))
-        end
-    end
 end
 
 function love.update(dt)
@@ -43,26 +36,31 @@ function love.update(dt)
         camera:drag(mouseX, mouseY)
     end
 
-    for _, planet in ipairs(planets) do 
+    for _, planet in ipairs(planets) do
         planet:update(adjustedDt)
     end
 
     camera:updateMousePosition()
 end
 
-local currentComposition = nil
-
 function love.mousepressed(x, y, button)
+    if PlanetMenu.isOpen() then
+        PlanetMenu.close()
+        return
+    end
+
     -- Convert screen coordinates to world coordinates
     local worldX, worldY = camera:screenToWorld(x, y)
 
     if button == 1 then
         for _, planet in ipairs(planets) do
             if planet:isClicked(worldX, worldY) then
-                currentComposition = planet:getCompositionText()
-                return -- Only handle the first clicked planet
+                PlanetMenu.open(planet)
+                return
             end
         end
+
+        camera:startDragging(x, y)
     end
 end
 
@@ -71,7 +69,6 @@ function love.mousereleased(x, y, button)
         camera:stopDragging()
     end
 end
-
 
 function love.wheelmoved(x, y)
     camera:wheelmoved(x, y)
@@ -87,14 +84,6 @@ function love.draw()
 
     camera:reset()
 
-    -- Draw the composition text in the top-left corner
-    if currentComposition then
-        love.graphics.setColor(1, 1, 1, 1) -- White text color
-        local y = 10
-        for _, line in ipairs(currentComposition) do
-            love.graphics.print(line, 10, y)
-            y = y + 20
-        end
-    end
+    -- Draw the planet info screen if open
+    PlanetMenu.draw()
 end
-
