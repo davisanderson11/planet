@@ -1,4 +1,23 @@
-Gameplay Loop
+---To-do---
+
+-Soon-
+Finish planet constructor and add all resource types
+Better math.random() implementation
+Main menu
+Simulation speed controls
+Add starry sky background :)
+Planet info screen
+Planet texture generation
+
+-Later-
+yyyy-mm-dd time tracker
+Satellites and other launchable craft
+Satellite "orbit" behavior
+Orbit selector for launched craft
+Population tracker
+Civilization scale tracker
+
+---Gameplay Loop---
 Start at Type 0.75 Civilization with 8,000,000,000 population
 Launch craft to the moon. Craft include satellites, orbiters, stations, planetary bases, and planetary settlement modules.
 Craft can be set on specific orbits such as circular, elliptical, geostationary, polar, as well as free return trajectories, cycler orbits, lagrange point orbits, etc.
@@ -6,10 +25,10 @@ Mine resources from each planet
 Use rockets at first, but eventually surface to space vehicles, to transport mined materials to orbiting stations, satellites, and carriers
 Use resources to build faster, larger, and better craft as well as to build larger planetary bases and eventually terraform
 
-Tech Tree
+---Tech Tree---
 
 
-Resources
+---Resources---
 Hydrogen
 Deuterium
 Helium
