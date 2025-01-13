@@ -1,6 +1,9 @@
 local Planet = require("planet")
 local Camera = require("camera")
-local PlanetMenu = require("menus/planet_menu")
+local PlanetMenu = require("menu/planet_menu")
+local MainMenu = require("menu/main_menu")
+
+local gameState = "main_menu" -- Default game state
 
 local windowWidth, windowHeight = love.graphics.getDimensions()
 planets = {}
@@ -28,62 +31,88 @@ function love.load()
 end
 
 function love.update(dt)
-    local adjustedDt = math.min(dt, 0.01)
-    camera:update(adjustedDt)
+    if gameState == "game" then
+        local adjustedDt = math.min(dt, 0.01)
+        camera:update(adjustedDt)
 
-    if camera.isDragging then
-        local mouseX, mouseY = love.mouse.getPosition()
-        camera:drag(mouseX, mouseY)
+        if camera.isDragging then
+            local mouseX, mouseY = love.mouse.getPosition()
+            camera:drag(mouseX, mouseY)
+        end
+
+        for _, planet in ipairs(planets) do
+            planet:update(adjustedDt)
+        end
+
+        camera:updateMousePosition()
     end
-
-    for _, planet in ipairs(planets) do
-        planet:update(adjustedDt)
-    end
-
-    camera:updateMousePosition()
 end
 
+
 function love.mousepressed(x, y, button)
-    if PlanetMenu.isOpen() then
-        PlanetMenu.close()
+    if gameState == "main_menu" then
+        local action = MainMenu.mousepressed(x, y, button)
+        if action == "game" then
+            gameState = "game" -- Start the game
+        end
         return
     end
 
-    -- Convert screen coordinates to world coordinates
-    local worldX, worldY = camera:screenToWorld(x, y)
-
-    if button == 1 then
-        for _, planet in ipairs(planets) do
-            if planet:isClicked(worldX, worldY) then
-                PlanetMenu.open(planet)
-                return
-            end
+    if gameState == "game" then
+        if PlanetMenu.isOpen() then
+            PlanetMenu.close()
+            return
         end
 
-        camera:startDragging(x, y)
+        local worldX, worldY = camera:screenToWorld(x, y)
+
+        if button == 1 then
+            for _, planet in ipairs(planets) do
+                if planet:isClicked(worldX, worldY) then
+                    PlanetMenu.open(planet)
+                    return
+                end
+            end
+
+            camera:startDragging(x, y)
+        end
     end
 end
 
 function love.mousereleased(x, y, button)
-    if button == 1 then
+    if gameState == "game" and button == 1 then
         camera:stopDragging()
     end
 end
 
-function love.wheelmoved(x, y)
-    camera:wheelmoved(x, y)
+function love.mousemoved(x, y, dx, dy)
+    if gameState == "main_menu" then
+        MainMenu.mousemoved(x, y)
+    end
 end
+
+function love.wheelmoved(x, y)
+    if gameState == "game" then
+        camera:wheelmoved(x, y) -- Only handle zooming when in the game state
+    end
+end
+
 
 function love.draw()
-    camera:apply()
+    if gameState == "main_menu" then
+        MainMenu.draw()
+    elseif gameState == "game" then
+        camera:apply()
 
-    -- Draw all planets
-    for _, planet in ipairs(planets) do
-        planet:draw(camera)
+        -- Draw all planets
+        for _, planet in ipairs(planets) do
+            planet:draw(camera)
+        end
+
+        camera:reset()
+
+        -- Draw the planet info screen if open
+        PlanetMenu.draw()
     end
-
-    camera:reset()
-
-    -- Draw the planet info screen if open
-    PlanetMenu.draw()
 end
+
