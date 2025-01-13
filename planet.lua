@@ -10,26 +10,38 @@ Planet.__index = Planet
     -- Table of important planetary values
     local planetData = {
         star = {333, 1.572, 1.5, {Hydrogen = 70, Helium = 30}},
-        superJupiter = {120, 1.64, 2, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
-        jupiter = {40, 1.64, 2, {Hydrogen = 90, Helium = 10}},
-        subJupiter = {8, 1.64, 2, {Hydrogen = 90, Helium = 9, Carbon = 1}},
-        superNeptune = {5, 1.5, 5, {Hydrogen = 89, Helium = 9, Carbon = 1, Nitrogen = 1}},
-        neptune = {2, 1.5, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-        subNeptune = {0.6, 1.5, 5, {Hydrogen = 89, Nitrogen = 10, CarbonDioxide = 1}},
-        superEarth = {0.5, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        earth = {0.1, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        subEarth = {0.04, 1.15, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        superMercury = {0.05, 1, 12, {Iron = 30, Silicon = 68, RareMetals = 2}},
-        mercury = {0.01, 1, 12, {Iron = 30, Silicon = 68, RareMetals = 2}},
-        subMercury = {0.0005, 1, 12, {Iron = 30, Silicon = 68, RareMetals = 2}}, 
-        superPluto = {0.01, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}},
-        pluto =  {0.0005, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}},
-        subPluto = {0.0001, 1.43, 50, {Carbon = 70, Nitrogen = 10, Water = 20}},
+        superJovia = {120, 1.64, 2, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
+        jovia = {40, 1.64, 2, {Hydrogen = 90, Helium = 10}},
+        subJovia = {8, 1.64, 2, {Hydrogen = 90, Helium = 9, Carbon = 1}},
+        superNeptunia = {5, 1.5, 5, {Hydrogen = 89, Helium = 9, Carbon = 1, Nitrogen = 1}},
+        neptunia = {2, 1.5, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+        subNeptunia = {0.6, 1.5, 5, {Hydrogen = 89, Nitrogen = 10, CarbonDioxide = 1}},
+        superTerra = {0.5, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+        terra = {0.1, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+        subTerra = {0.04, 1.15, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+        superFerria = {0.05, 1, 12, {Iron = 30, Silicon = 68, RareMetals = 2}},
+        ferria = {0.01, 1, 12, {Iron = 30, Silicon = 68, RareMetals = 2}},
+        subFerria = {0.0005, 1, 12, {Iron = 30, Silicon = 68, RareMetals = 2}}, 
+        superPlutonia = {0.01, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}},
+        plutonia =  {0.0005, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}},
+        subPlutonia = {0.0001, 1.43, 50, {Carbon = 70, Nitrogen = 10, Water = 20}},
+
+        sol = {333, 1.572, 1.5, {Hydrogen = 70, Helium = 30}},
+        mercury = {0.0055, 1, 12, {Hydrogen = 90, Helium = 10}},
+        venus = {0.0815, 1, 12, {Hydrogen = 90, Helium = 9, Carbon = 1}},
+        earth = {0.1, 1, 12, {Hydrogen = 89, Helium = 9, Carbon = 1, Nitrogen = 1}},
+        mars = {0.00107, 1.5, 12, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+        ceres = {0.000016, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+        jupiter = {31.7906, 1, 2, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+        saturn = {9.516, 1.15, 2, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+        uranus = {1.454, 1, 5, {Iron = 30, Silicon = 68, RareMetals = 2}},
+        neptune = {1.715, 1, 5, {Iron = 30, Silicon = 68, RareMetals = 2}},
+        pluto = {0.00022, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
+        eris = {0.00027, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}},
     }
 
 -- Constructor for a new planet
 function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
-    assert(type(ecc) == "number", "Eccentricity (ecc) must be a number")
     local self = setmetatable({}, Planet)
 
     self.angle = math.random(0, 360)
@@ -47,10 +59,10 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     self.originX = centerX + c -- Adjust to place the center at one focus
     self.originY = centerY
 
-    self.color = {1,1,1,1}
-    if t == "star" then self.color = {100,100,0,1} end
-    self.atmosphereColor = self.color
-    if t == "star" then self.atmosphereColor = {120,100,0,1} end
+    self.color = {1,1,1,1} -- TODO: Planet texture generation
+    if t == "star" or t == "sol" then self.color = {100,100,0,1} end
+    self.atmosphereColor = self.color -- TODO: Atmosphere generation
+    if t == "star" or t == "sol" then self.atmosphereColor = {120,100,0,1} end
 
     -- Init pos
     self.x = self.originX
@@ -58,7 +70,7 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
 
     self.composition = self:generateComposition()
 
-    self.parentBody = parentBody
+    self.parentBody = parentBody -- TODO: Reintegrate moons
 
     return self
 end

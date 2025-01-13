@@ -11,18 +11,19 @@ function love.load()
     math.randomseed(os.time())
 
     -- Add the central star and planets
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.000001, 0, "star"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.000001, 0, "sol"))
 
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.387 * 235, 0.206, "mercury"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.723 * 235, 0.006, "earth"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.723 * 235, 0.006, "venus"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1 * 235, 0.017, "earth"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1.523 * 235, 0.093, "subEarth"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 2.77 * 235, 0.079, "subEarth"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 1.523 * 235, 0.093, "mars"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 2.77 * 235, 0.079, "ceres"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 5.203 * 235, 0.049, "jupiter"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 9.583 * 235, 0.057, "subJupiter"))
-    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 19.191 * 235, 0.047, "neptune"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 9.583 * 235, 0.057, "saturn"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 19.191 * 235, 0.047, "uranus"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 30.07 * 235, 0.009, "neptune"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 39.482 * 235, 0.249, "pluto"))
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 67.864 * 235, 0.436, "eris"))
 
     local function addMoons(parentIndex, numMoons)
         local parentPlanet = planets[parentIndex]
