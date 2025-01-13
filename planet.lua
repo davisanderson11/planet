@@ -1,8 +1,6 @@
 local Planet = {}
 Planet.__index = Planet
 
-local Satellite = require("satellite")
-
 -- Constructor for a new planet
 function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     assert(type(ecc) == "number", "Eccentricity (ecc) must be a number")
@@ -15,22 +13,22 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     self.type = t
 
     local masses = {
-        star = 333000,
-        superJupiter = 1200,
-        jupiter = 400,
-        subJupiter = 80,
-        superNeptune = 50,
-        neptune = 20,
-        subNeptune = 6,
-        superEarth = 5,
-        earth = 1,
-        subEarth = 0.4,
-        superMercury = 0.5,
-        mercury = 0.1,
-        subMercury = 0.005, 
-        superPluto = 0.1,
-        pluto =  0.005,
-        subPluto = 0.001,
+        star = 333,
+        superJupiter = 120,
+        jupiter = 40,
+        subJupiter = 8,
+        superNeptune = 5,
+        neptune = 2,
+        subNeptune = 0.6,
+        superEarth = 0.5,
+        earth = 0.1,
+        subEarth = 0.04,
+        superMercury = 0.05,
+        mercury = 0.01,
+        subMercury = 0.0005, 
+        superPluto = 0.01,
+        pluto =  0.0005,
+        subPluto = 0.0001,
     }
 
     local densityFactors = {
@@ -136,24 +134,6 @@ function Planet:isClicked(mouseX, mouseY)
     return distance <= self.radius -- Check if within the planet's radius
 end
 
-function Planet:onRightClick()
-    -- Place a satellite in a stable orbit at 4 times the planet's radius
-    local orbitRadius = self.radius * 2
-    local angle = math.random(0, 2 * math.pi) -- Random angle around the planet
-    local satelliteX = self.x + orbitRadius * math.cos(angle)
-    local satelliteY = self.y + orbitRadius * math.sin(angle)
-
-    -- Calculate the required orbital velocity for a stable circular orbit
-    local orbitalVelocity = math.sqrt(self.mass / orbitRadius)
-    local tangentialAngle = angle + math.pi / 2 -- Perpendicular to the radial direction
-    local velocityX = orbitalVelocity * math.cos(tangentialAngle)
-    local velocityY = orbitalVelocity * math.sin(tangentialAngle)
-
-    -- Create and add the satellite
-    local newSatellite = Satellite.new(satelliteX, satelliteY, velocityX, velocityY)
-    table.insert(satellites, newSatellite)
-end
-
 function Planet:getCompositionText()
     local text = {"Surface Composition:"}
     for element, percentage in pairs(self.composition) do
@@ -166,21 +146,21 @@ end
 function Planet:draw(camera)
     local radiusMaximums = {
         star = 0.2,
-        superJupiter = 0.8,
-        jupiter = 0.8,
-        subJupiter = 0.8,
-        superNeptune = 1.5,
-        neptune = 1.5,
-        subNeptune = 1.5,
-        superEarth = 4,
-        earth = 5,
-        subEarth = 5,
-        superMercury = 7,
-        mercury = 7,
-        subMercury = 10, 
-        superPluto = 7,
-        pluto =  10,
-        subPluto = 15,
+        superJupiter = 2,
+        jupiter = 2,
+        subJupiter = 2,
+        superNeptune = 5,
+        neptune = 5,
+        subNeptune = 5,
+        superEarth = 12,
+        earth = 12,
+        subEarth = 12,
+        superMercury = 12,
+        mercury = 12,
+        subMercury = 12, 
+        superPluto = 25,
+        pluto =  25,
+        subPluto = 50,
     }
     local scaledRadius = self.radius / camera.scale
     local adjustedRadius = self.type and math.max(self.radius, scaledRadius * radiusMaximums[self.type]) or self.radius
