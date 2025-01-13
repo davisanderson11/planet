@@ -45,19 +45,23 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     local self = setmetatable({}, Planet)
 
     self.angle = math.random(0, 360)
-    self.semiMajorAxis = smaj 
+    self.semiMajorAxis = smaj
     self.semiMinorAxis = smaj * math.sqrt(1 - ecc^2) -- Initially circular
 
     self.type = t
 
     self.mass = planetData[self.type][MASS]
     self.radius = self.mass^(1/3) * planetData[self.type][DENSITYFACTOR]
-    self.speed = 1 / self.semiMajorAxis
     self.temperature = (((255 / ((self.semiMajorAxis / 235)/110000^0.5))^0.5) * 1 * 1) - 273.15 -- Multiplied by albedo factor and greenhouse factor (TODO)
 
     local c = math.sqrt(self.semiMajorAxis^2 - self.semiMinorAxis^2)
     self.originX = centerX + c -- Adjust to place the center at one focus
     self.originY = centerY
+
+    local viewAngle = 45
+    self.semiMajorAxis = smaj * (90/viewAngle) -- Adjust view angle (TODO - Fix)
+
+    self.speed = 1 / self.semiMajorAxis
 
     self.color = {1,1,1,1} -- TODO: Planet texture generation
     if t == "star" or t == "sol" then self.color = {100,100,0,1} end
