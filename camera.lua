@@ -6,7 +6,7 @@ function Camera.new()
     self.scale = 1 -- Current zoom level
     self.offsetX = 0 -- Camera offset in X
     self.offsetY = 0 -- Camera offset in Y
-    self.moveSpeed = 300 -- Base movement speed
+    self.moveSpeed = 300
     self.isDragging = false -- Track if the user is dragging the camera
     self.lastMouseX = 0 -- Last mouse X position
     self.lastMouseY = 0 -- Last mouse Y position
@@ -17,7 +17,6 @@ function Camera:update(dt)
     -- Adjust movement speed based on zoom level
     local adjustedMoveSpeed = self.moveSpeed * (1)
 
-    -- Handle keyboard movement
     if love.keyboard.isDown("w") then
         self.offsetY = self.offsetY + adjustedMoveSpeed * dt
     end

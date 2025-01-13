@@ -7,7 +7,7 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     local self = setmetatable({}, Planet)
 
     self.angle = math.random(0, 360)
-    self.semiMajorAxis = smaj -- Between 50 and 1000
+    self.semiMajorAxis = smaj 
     self.semiMinorAxis = smaj * math.sqrt(1 - ecc^2) -- Initially circular
 
     self.type = t
@@ -83,12 +83,13 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     self.atmosphereColor = self.color
     if t == "star" then self.atmosphereColor = {120,100,0,1} end
 
-    self.x = self.originX -- Initialize position
-    self.y = self.originY -- Initialize position
+    -- Init pos
+    self.x = self.originX
+    self.y = self.originY
 
     self.composition = Planet.generateComposition()
 
-    self.parentBody = parentBody -- New field for parent planet/moon relationship
+    self.parentBody = parentBody
 
     return self
 end
@@ -122,7 +123,6 @@ function Planet:update(dt)
         end
     end
 
-    -- Update the planet's position along its elliptical orbit
     self.angle = self.angle + self.speed * dt
     self.x = self.originX + self.semiMajorAxis * math.cos(math.rad(self.angle))
     self.y = self.originY + self.semiMinorAxis * math.sin(math.rad(self.angle))
