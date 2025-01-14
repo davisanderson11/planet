@@ -5,6 +5,9 @@ local windowWidth, windowHeight = love.graphics.getDimensions()
 -- Variable to track the currently selected planet
 local selectedPlanet = nil
 
+syFont = love.graphics.newFont("fonts/NotoSansSymbols.ttf", 15)
+txFont = love.graphics.newFont("fonts/NotoSansSymbols.ttf", 15)
+
 -- Function to open the planet info menu
 function PlanetMenu.open(planet)
     selectedPlanet = planet
@@ -40,7 +43,11 @@ function PlanetMenu.draw()
     -- Title
     love.graphics.printf(selectedPlanet.type:upper() .. " INFO", x + 10, y + 10, width - 20, "center")
 
-    -- Display temperature
+    font = love.graphics.setFont(syFont, 15)
+    love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass) .. " M🜨", x + 10, y + yOffset, width - 20, "left")
+    yOffset = yOffset + 20
+
+    font = love.graphics.setFont(txFont, 15)
     love.graphics.printf("Temperature: " .. string.format("%.2f", selectedPlanet.temperature) .. " °C", x + 10, y + yOffset, width - 20, "left")
     yOffset = yOffset + 20
 

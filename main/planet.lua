@@ -82,7 +82,7 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     self.visibleSemiMajorAxis = self.semiMajorAxis * (90/viewAngle) -- Adjust view angle (TODO - Fix)
     self.visibleSemiMinorAxis = self.semiMinorAxis * math.cos(math.rad(INCLINATION))
 
-    self.speed = 1000 / self.visibleSemiMajorAxis
+    self.speed = 1 / self.visibleSemiMajorAxis
 
     self.color = {1,1,1,1} -- TODO: Planet texture generation
     if t == "star" or t == "sol" then self.color = {100,100,0,1} end
