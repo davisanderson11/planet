@@ -5,17 +5,16 @@ local windowWidth, windowHeight = love.graphics.getDimensions()
 -- Button configuration
 local buttons = {
     {text = "Start", action = function() return "game" end},
-    {text = "Exit", action = function() love.event.quit() end},
+    {text = "Exit", action = function() return "game" end},
 }
 
 -- Track the hovered button
-local hoveredButton = nil
+local hoveredStar = nil
 
 -- Draw the main menu
 function StarMap.draw()
     love.graphics.setBackgroundColor(0, 0, 0 )
-    local windowWidth, windowHeight = love.graphics.getDimensions()
-    local buttonWidth, buttonHeight = 200, 50
+    local starRadius = 20
     local buttonSpacing = 20
     local startY = (windowHeight - (#buttons * (buttonHeight + buttonSpacing - buttonSpacing))) / 2
 
@@ -24,12 +23,12 @@ function StarMap.draw()
         local y = startY + (i - 1) * (buttonHeight + buttonSpacing)
 
         -- Highlight hovered button
-        if hoveredButton == i then
+        if hoveredStar == i then
             love.graphics.setColor(0.4, 0.4, 0.4)
         else
             love.graphics.setColor(0.2, 0.2, 0.2)
         end
-        love.graphics.rectangle("fill", x, y, buttonWidth, buttonHeight)
+        love.graphics.circle("fill", x, y, starRadius)
 
         -- Draw button text
         love.graphics.setColor(1, 1, 1)
@@ -44,12 +43,12 @@ function StarMap.mousemoved(x, y)
     local buttonSpacing = 20
     local startY = (windowHeight - (#buttons * (buttonHeight + buttonSpacing))) / 2
 
-    hoveredButton = nil
+    hoveredStar = nil
     for i, button in ipairs(buttons) do
         local bx = (windowWidth - buttonWidth) / 2
         local by = startY + (i - 1) * (buttonHeight + buttonSpacing)
         if x > bx and x < bx + buttonWidth and y > by and y < by + buttonHeight then
-            hoveredButton = i
+            hoveredStar = i
             return
         end
     end
@@ -57,8 +56,8 @@ end
 
 -- Handle mouse presses
 function Starmap.mousepressed(x, y, button)
-    if button == 1 and hoveredButton then
-        local action = buttons[hoveredButton].action
+    if button == 1 and hoveredStar then
+        local action = buttons[hoveredStar].action
         return action()
     end
 end
