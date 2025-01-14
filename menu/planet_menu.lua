@@ -27,6 +27,7 @@ function PlanetMenu.draw()
     -- Screen dimensions
     local x, y = 10, 10
     local width, height = 300, 200
+    local yOffset = 40
 
     -- Background box
     love.graphics.setColor(0, 0, 0, 0.8)
@@ -40,10 +41,13 @@ function PlanetMenu.draw()
     love.graphics.printf(selectedPlanet.type:upper() .. " INFO", x + 10, y + 10, width - 20, "center")
 
     -- Display temperature
-    love.graphics.printf("Temperature: " .. string.format("%.2f", selectedPlanet.temperature) .. " °C", x + 10, y + 40, width - 20, "left")
+    love.graphics.printf("Temperature: " .. string.format("%.2f", selectedPlanet.temperature) .. " °C", x + 10, y + yOffset, width - 20, "left")
+    yOffset = yOffset + 20
+
+    love.graphics.printf("Semi Major Axis: " .. string.format("%.2f", (selectedPlanet.semiMajorAxis / 2)/235) .. " AU", x + 10, y + yOffset, width - 20, "left")
+    yOffset = yOffset + 20
 
     -- Display composition
-    local yOffset = 60
     love.graphics.printf("Composition:", x + 10, y + yOffset, width - 20, "left")
     yOffset = yOffset + 20
 

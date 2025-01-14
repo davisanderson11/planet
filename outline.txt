@@ -6,7 +6,6 @@ Add starry sky background :)
 Planet texture generation
 
 -Later-
-"Hacky" 3d graphics
 yyyy-mm-dd time tracker
 Satellites and other launchable craft
 Satellite "orbit" behavior

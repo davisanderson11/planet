@@ -26,6 +26,12 @@ Planet.__index = Planet
         plutonia =  {0.0005, 1.43, 25, {Carbon = 70, Nitrogen = 10, Water = 20}},
         subPlutonia = {0.0001, 1.43, 50, {Carbon = 70, Nitrogen = 10, Water = 20}},
 
+        chthonia = {5, 1.2, 5, {Unknown = 100}},
+        carbonia = {1, 1.2, 5, {Unknown = 100}},
+        hyceanPlanet = {1, 1.2, 5, {Unknown = 100}},
+        heliumPlanet = {1, 1.2, 5, {Unknown = 100}},
+        ammoniaPlanet = {1, 1.2, 5, {Unknown = 100}},
+
         sol = {333, 1.572, 1.5, {Hydrogen = 70, Helium = 30}},
         mercury = {0.0055, 1, 20, {Iron = 30, Silicon = 68, RareMetals = 2}},
         venus = {0.0815, 1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
