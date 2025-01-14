@@ -65,14 +65,12 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     self.originY = centerY
 
     local viewAngle = 45
-    self.semiMajorAxis = smaj * (90/viewAngle) -- Adjust view angle (TODO - Fix)
+    self.visibleSemiMajorAxis = self.semiMajorAxis * (90/viewAngle) -- Adjust view angle (TODO - Fix)
 
-    self.speed = 1 / self.semiMajorAxis
+    self.speed = 1 / self.visibleSemiMajorAxis
 
     self.color = {1,1,1,1} -- TODO: Planet texture generation
     if t == "star" or t == "sol" then self.color = {100,100,0,1} end
-    self.atmosphereColor = self.color -- TODO: Atmosphere generation
-    if t == "star" or t == "sol" then self.atmosphereColor = {120,100,0,1} end
 
     -- Init pos
     self.x = self.originX
@@ -123,7 +121,7 @@ function Planet:update(dt)
     end
 
     self.angle = self.angle + self.speed * dt
-    self.x = self.originX + self.semiMajorAxis * math.cos(math.rad(self.angle))
+    self.x = self.originX + self.visibleSemiMajorAxis * math.cos(math.rad(self.angle))
     self.y = self.originY + self.semiMinorAxis * math.sin(math.rad(self.angle))
 end
 
@@ -146,15 +144,13 @@ function Planet:draw(camera)
     local scaledRadius = self.radius / camera.scale
     local adjustedRadius = self.type and math.max(self.radius, scaledRadius * planetData[self.type][RADIUSMAXIMUM]) or self.radius
 
-    love.graphics.setColor(self.atmosphereColor)
-    love.graphics.circle("fill", self.x, self.y, (adjustedRadius) * 1.2)
     love.graphics.setColor(1, 1, 1, 0.5) -- Semi-transparent orbit
     love.graphics.setLineWidth(1 / camera.scale)
     love.graphics.ellipse(
         "line",
         self.originX, -- Center X of the ellipse
         self.originY, -- Center Y of the ellipse
-        self.semiMajorAxis, -- Horizontal radius
+        self.visibleSemiMajorAxis, -- Horizontal radius
         self.semiMinorAxis -- Vertical radius
     )
     love.graphics.setLineWidth(1)
