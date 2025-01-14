@@ -44,7 +44,7 @@ function PlanetMenu.draw()
     love.graphics.printf("Temperature: " .. string.format("%.2f", selectedPlanet.temperature) .. " °C", x + 10, y + yOffset, width - 20, "left")
     yOffset = yOffset + 20
 
-    love.graphics.printf("Semi Major Axis: " .. string.format("%.2f", (selectedPlanet.semiMajorAxis / 2)/235) .. " AU", x + 10, y + yOffset, width - 20, "left")
+    love.graphics.printf("Semi Major Axis: " .. string.format("%.2f", (selectedPlanet.semiMajorAxis)/235) .. " AU", x + 10, y + yOffset, width - 20, "left")
     yOffset = yOffset + 20
 
     -- Display composition
