@@ -2,12 +2,14 @@ local Planet = require("main/planet")
 local Camera = require("main/camera")
 local PlanetMenu = require("menu/planet_menu")
 local MainMenu = require("menu/main_menu")
+local TimeController = require("main/time_controller")
 
 local gameState = "main_menu" -- Default game state
 
 local windowWidth, windowHeight = love.graphics.getDimensions()
 planets = {}
 local camera = Camera.new()
+local timeController = TimeController.new()
 
 function love.load()
     -- Set up window
@@ -32,19 +34,35 @@ end
 
 function love.update(dt)
     if gameState == "game" then
-        local adjustedDt = math.min(dt, 0.01)
+        -- Apply the time scale to the delta time
+        local adjustedDt = math.min(dt, 0.01) * timeController.timeScale
+
+        -- Update the camera
         camera:update(adjustedDt)
 
+        -- Handle camera dragging
         if camera.isDragging then
             local mouseX, mouseY = love.mouse.getPosition()
             camera:drag(mouseX, mouseY)
         end
 
+        -- Update all planets
         for _, planet in ipairs(planets) do
             planet:update(adjustedDt)
         end
-
+        
+        -- Update mouse position for zoom functionality
         camera:updateMousePosition()
+    end
+end
+
+function love.keypressed(key)
+    if key == "=" then -- Increase speed
+        timeController:increaseSpeed()
+    elseif key == "-" then -- Decrease speed
+        timeController:decreaseSpeed()
+    elseif key == "0" then -- Reset speed
+        timeController:resetSpeed()
     end
 end
 

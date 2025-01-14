@@ -34,7 +34,7 @@ Planet.__index = Planet
         ammoniaPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
 
         sol = {333, 1.572, 1.5, 0, {Hydrogen = 70, Helium = 30}},
-        mercury = {0.0055, 1, 20, 7, {Iron = 30, Silicon = 68, RareMetals = 2}},
+        mercury = {0.0055, 1, 20, -7, {Iron = 30, Silicon = 68, RareMetals = 2}},
         venus = {0.0815, 1, 12, 3.4, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
         earth = {0.1, 1, 12, 0, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
         mars = {0.00107, 1.5, 25, 1.8, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},

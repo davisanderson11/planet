@@ -1,9 +1,8 @@
 ---To-do---
 
 -Soon-
-Simulation speed controls
 Add starry sky background :)
-Planet texture generation
+Star map
 
 -Later-
 yyyy-mm-dd time tracker
