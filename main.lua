@@ -30,6 +30,8 @@ function love.load()
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 30.07 * 235, 0.009, "neptune"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 39.482 * 235, 0.249, "pluto"))
     table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 67.864 * 235, 0.436, "eris"))
+
+    table.insert(planets, Planet.new(windowWidth / 2, windowHeight / 2, 0.02 * 235, 0.05, "ferria", planets[4])) -- Moon orbiting Earth
 end
 
 function love.update(dt)

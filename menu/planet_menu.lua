@@ -44,7 +44,7 @@ function PlanetMenu.draw()
     love.graphics.printf(selectedPlanet.type:upper() .. " INFO", x + 10, y + 10, width - 20, "center")
 
     font = love.graphics.setFont(syFont, 15)
-    love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass) .. " M🜨", x + 10, y + yOffset, width - 20, "left")
+    love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass * 10) .. " M🜨", x + 10, y + yOffset, width - 20, "left")
     yOffset = yOffset + 20
 
     font = love.graphics.setFont(txFont, 15)

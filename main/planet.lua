@@ -128,11 +128,10 @@ end
 function Planet:update(dt)
     -- Update position for moons (if this is a moon)
     if self.parentBody then
-        local parent = planets[self.parentBody]
-        if parent then
-            self.originX = parent.x
-            self.originY = parent.y
-        end
+        local parent = self.parentBody
+        self.originX = parent.x
+        self.originY = parent.y
+        self.rotatedOriginX, self.rotatedOriginY = rotatePoint(self.originX, self.originY, parent.originX, parent.originY, planetData[self.type][INCLINATION])
     end
 
     -- Update the orbital angle
