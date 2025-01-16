@@ -37,7 +37,6 @@ local planetData = {
     uranus = {1.454, 1, 5, 0.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
     neptune = {1.715, 1, 5, 1.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
     pluto = {0.00022, 1.43, 30, 17.2, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
-    eris = {0.00027, 1.43, 30, 44, {Carbon = 70, Nitrogen = 10, Water = 20}},
 }
 
 local function rotatePoint(x, y, px, py, theta)
