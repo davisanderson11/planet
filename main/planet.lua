@@ -2,7 +2,7 @@ local Planet = {}
 Planet.__index = Planet
 
 -- Indicies for table
-local MASS, DENSITYFACTOR, RADIUSMAXIMUM, INCLINATION, RESOURCES = 1, 2, 3, 4, 5
+local DENSITYFACTOR, RADIUSMAXIMUM, RESOURCES = 1, 2, 3, 4
 
 local commonResources = {
     rocky = {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2},
@@ -13,30 +13,30 @@ local commonResources = {
 
 -- Table of important planetary values
 local planetData = {
-    star = {333, 1.572, 1.5, 0, {Hydrogen = 70, Helium = 30}},
-    jovia = {40, 1.64, 2, 0, commonResources.gas},
-    neptunia = {2, 1.5, 5, 0, commonResources.gas},
-    terra = {0.1, 1, 12, 0, commonResources.rocky},
-    ferria = {0.01, 1, 12, 0, commonResources.metallic},
-    plutonia =  {0.0005, 1.43, 25, 0, commonResources.icy},
+    star = {1.572, 1.5, {Hydrogen = 70, Helium = 30}},
+    jovia = {1.64, 2, commonResources.gas},
+    neptunia = {1.5, 5, commonResources.gas},
+    terra = {1, 12, commonResources.rocky},
+    ferria = {1, 12, commonResources.metallic},
+    plutonia =  {1.43, 25, commonResources.icy},
 
-    chthonia = {5, 1.2, 5, 0, {Unknown = 100}},
-    carbonia = {1, 1.2, 5, 0, {Unknown = 100}},
-    hyceanPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
-    heliumPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
-    ammoniaPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
+    chthonia = {1.2, 5, {Unknown = 100}},
+    carbonia = {1.2, 5, {Unknown = 100}},
+    hyceanPlanet = {1.2, 5, {Unknown = 100}},
+    heliumPlanet = {1.2, 5, {Unknown = 100}},
+    ammoniaPlanet = {1.2, 5, {Unknown = 100}},
 
-    sol = {333, 1.572, 1.5, 0, {Hydrogen = 70, Helium = 30}},
-    mercury = {0.0055, 1, 20, 7, {Iron = 30, Silicon = 68, RareMetals = 2}},
-    venus = {0.0815, 1, 12, 3.4, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
-    earth = {0.1, 1, 12, 0, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-    mars = {0.00107, 1.5, 25, 1.8, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
-    ceres = {0.000016, 1, 90, 10.4, {Carbon = 70, Nitrogen = 10, Water = 20}},
-    jupiter = {31.7906, 1, 2, 1.3, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
-    saturn = {9.516, 1.15, 2, 2.5, {Hydrogen = 90, Helium = 10}},
-    uranus = {1.454, 1, 5, 0.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-    neptune = {1.715, 1, 5, 1.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-    pluto = {0.00022, 1.43, 30, 17.2, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
+    sol = {1.572, 1.5, {Hydrogen = 70, Helium = 30}},
+    mercury = {1, 20, {Iron = 30, Silicon = 68, RareMetals = 2}},
+    venus = {1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
+    earth = {1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+    mars = {1.5, 25, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
+    ceres = {1, 90, {Carbon = 70, Nitrogen = 10, Water = 20}},
+    jupiter = {1, 2, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
+    saturn = {1.15, 2, {Hydrogen = 90, Helium = 10}},
+    uranus = {1, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+    neptune = {1, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+    pluto = {1.43, 30, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
 }
 
 local function rotatePoint(x, y, px, py, theta)
@@ -52,7 +52,7 @@ local function rotatePoint(x, y, px, py, theta)
 end
 
 -- Constructor for a new planet
-function Planet.new(centerX, centerY, smaj, ecc, t, parentBody, name)
+function Planet.new(centerX, centerY, mass, smaj, ecc, inc, t, parentBody, name)
     local self = setmetatable({}, Planet)
 
     self.angle = math.random(0, 360)
@@ -62,18 +62,19 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody, name)
     self.type = t
     self.name = name
 
-    self.mass = planetData[self.type][MASS]
+    self.mass = mass
     self.radius = self.mass^(1/3) * planetData[self.type][DENSITYFACTOR]
     self.temperature = (((255 / ((self.semiMajorAxis / 235)/110000^0.5))^0.5) * 1 * 1) - 273.15 -- Multiplied by albedo factor and greenhouse factor (TODO)
+    self.inclination = inc
 
     local c = math.sqrt(self.semiMajorAxis^2 - self.semiMinorAxis^2)
     self.originX = centerX + c -- Adjust to place the center at one focus
     self.originY = centerY
-    self.rotatedOriginX, self.rotatedOriginY = rotatePoint(self.originX, self.originY, centerX, centerY, planetData[self.type][INCLINATION])
+    self.rotatedOriginX, self.rotatedOriginY = rotatePoint(self.originX, self.originY, centerX, centerY, self.inclination)
 
     local viewAngle = 45
     self.visibleSemiMajorAxis = self.semiMajorAxis * (90/viewAngle) -- Adjust view angle (TODO - Fix)
-    self.visibleSemiMinorAxis = self.semiMinorAxis * math.cos(math.rad(INCLINATION))
+    self.visibleSemiMinorAxis = self.semiMinorAxis * math.cos(math.rad(self.inclination))
 
     self.speed = 1 / self.visibleSemiMajorAxis
 
@@ -124,7 +125,7 @@ function Planet:update(dt)
         local parent = self.parentBody
         self.originX = parent.x
         self.originY = parent.y
-        self.rotatedOriginX, self.rotatedOriginY = rotatePoint(self.originX, self.originY, parent.originX, parent.originY, planetData[self.type][INCLINATION])
+        self.rotatedOriginX, self.rotatedOriginY = rotatePoint(self.originX, self.originY, parent.originX, parent.originY, self.inclination)
     end
 
     -- Update the orbital angle
@@ -135,7 +136,7 @@ function Planet:update(dt)
     local y = self.visibleSemiMinorAxis * math.sin(math.rad(self.angle))
 
     -- Apply rotation for inclination
-    local rotatedX, rotatedY = rotatePoint(x, y, 0, 0, planetData[self.type][INCLINATION])
+    local rotatedX, rotatedY = rotatePoint(x, y, 0, 0, self.inclination)
 
     -- Adjust for the rotated origin
     self.x = self.rotatedOriginX + rotatedX
@@ -165,7 +166,7 @@ function Planet:draw(camera)
     love.graphics.setLineWidth(1 / camera.scale)
     love.graphics.push() -- Save the current transformation state
     love.graphics.translate(self.rotatedOriginX, self.rotatedOriginY) -- Move to the rotated origin
-    love.graphics.rotate(math.rad(planetData[self.type][INCLINATION])) -- Rotate the drawing context
+    love.graphics.rotate(math.rad(self.inclination)) -- Rotate the drawing context
 
     -- Draw the ellipse
     love.graphics.ellipse(
