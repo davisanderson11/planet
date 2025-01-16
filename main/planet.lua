@@ -57,7 +57,7 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody, name)
 
     self.angle = math.random(0, 360)
     self.semiMajorAxis = smaj
-    self.semiMinorAxis = smaj * math.sqrt(1 - ecc^2) -- Initially circular
+    self.semiMinorAxis = smaj * math.sqrt(1 - ecc^2)
 
     self.type = t
     self.name = name
