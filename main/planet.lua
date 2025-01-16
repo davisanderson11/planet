@@ -1,51 +1,44 @@
 local Planet = {}
 Planet.__index = Planet
 
-    -- Indicies for table
-    local MASS = 1
-    local DENSITYFACTOR = 2
-    local RADIUSMAXIMUM = 3 -- For display on screen only
-    local INCLINATION = 4
-    local RESOURCES = 5
+-- Indicies for table
+local MASS, DENSITYFACTOR, RADIUSMAXIMUM, INCLINATION, RESOURCES = 1, 2, 3, 4, 5
 
-    -- Table of important planetary values
-    local planetData = {
-        star = {333, 1.572, 1.5, 0, {Hydrogen = 70, Helium = 30}},
-        superJovia = {120, 1.64, 2, 0, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
-        jovia = {40, 1.64, 2, 0, {Hydrogen = 90, Helium = 10}},
-        subJovia = {8, 1.64, 2, 0, {Hydrogen = 90, Helium = 9, Carbon = 1}},
-        superNeptunia = {5, 1.5, 5, 0, {Hydrogen = 89, Helium = 9, Carbon = 1, Nitrogen = 1}},
-        neptunia = {2, 1.5, 5, 0, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-        subNeptunia = {0.6, 1.5, 5, 0, {Hydrogen = 89, Nitrogen = 10, CarbonDioxide = 1}},
-        superTerra = {0.5, 1, 12, 0, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        terra = {0.1, 1, 12, 0, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        subTerra = {0.04, 1.15, 12, 0, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        superFerria = {0.05, 1, 12, 0, {Iron = 30, Silicon = 68, RareMetals = 2}},
-        ferria = {0.01, 1, 12, 0, {Iron = 30, Silicon = 68, RareMetals = 2}},
-        subFerria = {0.0005, 1, 12, 0, {Iron = 30, Silicon = 68, RareMetals = 2}}, 
-        superPlutonia = {0.01, 1.43, 25, 0, {Carbon = 70, Nitrogen = 10, Water = 20}},
-        plutonia =  {0.0005, 1.43, 25, 0, {Carbon = 70, Nitrogen = 10, Water = 20}},
-        subPlutonia = {0.0001, 1.43, 50, 0, {Carbon = 70, Nitrogen = 10, Water = 20}},
+local commonResources = {
+    rocky = {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2},
+    icy = {Carbon = 70, Nitrogen = 10, Water = 20},
+    metallic = {Iron = 30, Silicon = 68, RareMetals = 2},
+    gas = {Hydrogen = 90, Helium = 10},
+}
 
-        chthonia = {5, 1.2, 5, 0, {Unknown = 100}},
-        carbonia = {1, 1.2, 5, 0, {Unknown = 100}},
-        hyceanPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
-        heliumPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
-        ammoniaPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
+-- Table of important planetary values
+local planetData = {
+    star = {333, 1.572, 1.5, 0, {Hydrogen = 70, Helium = 30}},
+    jovia = {40, 1.64, 2, 0, commonResources.gas},
+    neptunia = {2, 1.5, 5, 0, commonResources.gas},
+    terra = {0.1, 1, 12, 0, commonResources.rocky},
+    ferria = {0.01, 1, 12, 0, commonResources.metallic},
+    plutonia =  {0.0005, 1.43, 25, 0, commonResources.icy},
 
-        sol = {333, 1.572, 1.5, 0, {Hydrogen = 70, Helium = 30}},
-        mercury = {0.0055, 1, 20, -7, {Iron = 30, Silicon = 68, RareMetals = 2}},
-        venus = {0.0815, 1, 12, 3.4, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
-        earth = {0.1, 1, 12, 0, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-        mars = {0.00107, 1.5, 25, 1.8, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
-        ceres = {0.000016, 1, 90, 10.4, {Carbon = 70, Nitrogen = 10, Water = 20}},
-        jupiter = {31.7906, 1, 2, 1.3, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
-        saturn = {9.516, 1.15, 2, 2.5, {Hydrogen = 90, Helium = 10}},
-        uranus = {1.454, 1, 5, 0.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-        neptune = {1.715, 1, 5, 1.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-        pluto = {0.00022, 1.43, 30, 17.2, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
-        eris = {0.00027, 1.43, 30, 44, {Carbon = 70, Nitrogen = 10, Water = 20}},
-    }
+    chthonia = {5, 1.2, 5, 0, {Unknown = 100}},
+    carbonia = {1, 1.2, 5, 0, {Unknown = 100}},
+    hyceanPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
+    heliumPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
+    ammoniaPlanet = {1, 1.2, 5, 0, {Unknown = 100}},
+
+    sol = {333, 1.572, 1.5, 0, {Hydrogen = 70, Helium = 30}},
+    mercury = {0.0055, 1, 20, 7, {Iron = 30, Silicon = 68, RareMetals = 2}},
+    venus = {0.0815, 1, 12, 3.4, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
+    earth = {0.1, 1, 12, 0, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+    mars = {0.00107, 1.5, 25, 1.8, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
+    ceres = {0.000016, 1, 90, 10.4, {Carbon = 70, Nitrogen = 10, Water = 20}},
+    jupiter = {31.7906, 1, 2, 1.3, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
+    saturn = {9.516, 1.15, 2, 2.5, {Hydrogen = 90, Helium = 10}},
+    uranus = {1.454, 1, 5, 0.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+    neptune = {1.715, 1, 5, 1.8, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
+    pluto = {0.00022, 1.43, 30, 17.2, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
+    eris = {0.00027, 1.43, 30, 44, {Carbon = 70, Nitrogen = 10, Water = 20}},
+}
 
 local function rotatePoint(x, y, px, py, theta)
     theta = math.rad(theta)
@@ -60,7 +53,7 @@ local function rotatePoint(x, y, px, py, theta)
 end
 
 -- Constructor for a new planet
-function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
+function Planet.new(centerX, centerY, smaj, ecc, t, parentBody, name)
     local self = setmetatable({}, Planet)
 
     self.angle = math.random(0, 360)
@@ -68,6 +61,7 @@ function Planet.new(centerX, centerY, smaj, ecc, t, parentBody)
     self.semiMinorAxis = smaj * math.sqrt(1 - ecc^2) -- Initially circular
 
     self.type = t
+    self.name = name
 
     self.mass = planetData[self.type][MASS]
     self.radius = self.mass^(1/3) * planetData[self.type][DENSITYFACTOR]

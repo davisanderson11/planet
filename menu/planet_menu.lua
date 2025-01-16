@@ -41,7 +41,7 @@ function PlanetMenu.draw()
     love.graphics.rectangle("line", x, y, width, height)
 
     -- Title
-    love.graphics.printf(selectedPlanet.type:upper() .. " INFO", x + 10, y + 10, width - 20, "center")
+    love.graphics.printf(selectedPlanet.name:upper() .. " INFO", x + 10, y + 10, width - 20, "center")
 
     font = love.graphics.setFont(syFont, 15)
     love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass * 10) .. " M🜨", x + 10, y + yOffset, width - 20, "left")
