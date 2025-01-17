@@ -17,8 +17,8 @@ local planetData = {
     jovia = {1.64, 2, commonResources.gas},
     neptunia = {1.5, 5, commonResources.gas},
     terra = {1, 12, commonResources.rocky},
-    ferria = {1, 12, commonResources.metallic},
-    plutonia =  {1.43, 25, commonResources.icy},
+    ferria = {1, 20, commonResources.metallic},
+    plutonia =  {1.43, 30, commonResources.icy},
 
     chthonia = {1.2, 5, {Unknown = 100}},
     carbonia = {1.2, 5, {Unknown = 100}},
