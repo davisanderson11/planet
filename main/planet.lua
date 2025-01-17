@@ -32,7 +32,7 @@ local planetData = {
     venus = {1, 15, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
     earth = {1, 15, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
     mars = {1.5, 15, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
-    ceres = {1, 90, {Carbon = 70, Nitrogen = 10, Water = 20}},
+    ceres = {1, 120, {Carbon = 70, Nitrogen = 10, Water = 20}},
     jupiter = {1, 3, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
     saturn = {1.15, 3, {Hydrogen = 90, Helium = 10}},
     uranus = {1, 4.5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
