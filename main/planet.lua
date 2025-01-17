@@ -2,7 +2,7 @@ local Planet = {}
 Planet.__index = Planet
 
 -- Indicies for table
-local DENSITYFACTOR, RADIUSMAXIMUM, RESOURCES = 1, 2, 3, 4
+local DENSITYFACTOR, RADIUSMAXIMUM, RESOURCES = 1, 2, 3
 
 local commonResources = {
     rocky = {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2},
@@ -17,8 +17,8 @@ local planetData = {
     jovia = {1.64, 2, commonResources.gas},
     neptunia = {1.5, 5, commonResources.gas},
     terra = {1, 12, commonResources.rocky},
-    ferria = {1, 20, commonResources.metallic},
-    plutonia =  {1.43, 30, commonResources.icy},
+    ferria = {1, 25, commonResources.metallic},
+    plutonia =  {1.43, 40, commonResources.icy},
 
     chthonia = {1.2, 5, {Unknown = 100}},
     carbonia = {1.2, 5, {Unknown = 100}},
@@ -27,16 +27,25 @@ local planetData = {
     ammoniaPlanet = {1.2, 5, {Unknown = 100}},
 
     sol = {1.572, 1.5, {Hydrogen = 70, Helium = 30}},
-    mercury = {1, 20, {Iron = 30, Silicon = 68, RareMetals = 2}},
+    mercury = {1, 25, {Iron = 30, Silicon = 68, RareMetals = 2}},
     venus = {1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
     earth = {1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-    mars = {1.5, 25, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
+    mars = {1.5, 30, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
     ceres = {1, 90, {Carbon = 70, Nitrogen = 10, Water = 20}},
     jupiter = {1, 2, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
     saturn = {1.15, 2, {Hydrogen = 90, Helium = 10}},
     uranus = {1, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
     neptune = {1, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-    pluto = {1.43, 30, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
+    pluto = {1.43, 40, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
+}
+
+local subtypeMultipliers = {
+    mega = 0.1,
+    super = 0.25,
+    reg = 1,
+    sub = 2,
+    mini = 4,
+    micro = 10,
 }
 
 local function rotatePoint(x, y, px, py, theta)
@@ -52,18 +61,20 @@ local function rotatePoint(x, y, px, py, theta)
 end
 
 -- Constructor for a new planet
-function Planet.new(centerX, centerY, mass, smaj, ecc, inc, t, parentBody, name)
+function Planet.new(centerX, centerY, mass, smaj, ecc, inc, st, t, parentBody, name)
     local self = setmetatable({}, Planet)
 
     self.angle = math.random(0, 360)
     self.semiMajorAxis = smaj
     self.semiMinorAxis = smaj * math.sqrt(1 - ecc^2)
 
+    self.subtype = st
     self.type = t
     self.name = name
 
     self.mass = mass
-    self.radius = self.mass^(1/3) * planetData[self.type][DENSITYFACTOR]
+    self.radius = self.mass^(1/3) * planetData[self.type][DENSITYFACTOR] *  subtypeMultipliers[self.subtype]
+
     self.temperature = (((255 / ((self.semiMajorAxis / 235)/110000^0.5))^0.5) * 1 * 1) - 273.15 -- Multiplied by albedo factor and greenhouse factor (TODO)
     self.inclination = inc
 
