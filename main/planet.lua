@@ -9,11 +9,12 @@ local commonResources = {
     icy = {Carbon = 70, Nitrogen = 10, Water = 20},
     metallic = {Iron = 30, Silicon = 68, RareMetals = 2},
     gas = {Hydrogen = 90, Helium = 10},
+    star = {Hydrogen = 70, Helium = 30},
 }
 
 -- Table of important planetary values
 local planetData = {
-    star = {1.572, 1.5, {Hydrogen = 70, Helium = 30}},
+    star = {1.572, 1.5, commonResources.star},
     jovia = {1.64, 2, commonResources.gas},
     neptunia = {1.5, 5, commonResources.gas},
     terra = {1, 12, commonResources.rocky},
@@ -26,17 +27,17 @@ local planetData = {
     heliumPlanet = {1.2, 5, {Unknown = 100}},
     ammoniaPlanet = {1.2, 5, {Unknown = 100}},
 
-    sol = {1.572, 1.5, {Hydrogen = 70, Helium = 30}},
+    sol = {1.572, 1.5, commonResources.star},
     mercury = {1, 25, {Iron = 30, Silicon = 68, RareMetals = 2}},
-    venus = {1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
-    earth = {1, 12, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
-    mars = {1.5, 30, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
+    venus = {1, 15, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, CarbonDioxide = 2}},
+    earth = {1, 15, {Iron = 20, Carbon = 10, Silicon = 40, Oxygen = 20, Nitrogen = 6, RareMetals = 2, Water = 2}},
+    mars = {1.5, 15, {Iron = 20, Carbon = 10, Silicon = 42, Oxygen = 20, Nitrogen = 6, RareMetals = 2}},
     ceres = {1, 90, {Carbon = 70, Nitrogen = 10, Water = 20}},
     jupiter = {1, 3, {Hydrogen = 89, Deuterium = 1, Helium = 10}},
     saturn = {1.15, 3, {Hydrogen = 90, Helium = 10}},
     uranus = {1, 4.5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
     neptune = {1, 5, {Hydrogen = 89, Helium = 10, Nitrogen = 1}},
-    pluto = {1.43, 50, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
+    pluto = {1.43, 65, {Carbon = 70, Nitrogen = 10, Water = 20}}, 
 }
 
 local subtypeMultipliers = {
@@ -75,7 +76,11 @@ function Planet.new(centerX, centerY, mass, smaj, ecc, inc, st, t, parentBody, n
     self.mass = mass
     self.radius = self.mass^(1/3) * planetData[self.type][DENSITYFACTOR] *  subtypeMultipliers[self.subtype]
 
-    self.temperature = (((255 / ((self.semiMajorAxis / 235)/110000^0.5))^0.5) * 1 * 1) - 273.15 -- Multiplied by albedo factor and greenhouse factor (TODO)
+    if parentBody == nil then
+        self.temperature = (((255 / ((self.semiMajorAxis / 235)/110000^0.5))^0.5) * 1 * 1) - 273.15 -- Multiplied by albedo factor and greenhouse factor (TODO)
+    else self.temperature = parentBody.temperature * 1 * 1
+    end
+
     self.inclination = inc
 
     local c = math.sqrt(self.semiMajorAxis^2 - self.semiMinorAxis^2)

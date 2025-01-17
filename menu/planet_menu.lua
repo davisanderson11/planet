@@ -29,7 +29,7 @@ function PlanetMenu.draw()
 
     -- Screen dimensions
     local x, y = 10, 10
-    local width, height = 300, 200
+    local width, height = 300, 300
     local yOffset = 40
 
     -- Background box
@@ -44,7 +44,12 @@ function PlanetMenu.draw()
     love.graphics.printf(selectedPlanet.name:upper() .. " INFO", x + 10, y + 10, width - 20, "center")
 
     font = love.graphics.setFont(syFont, 15)
-    love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass * 10) .. " M🜨", x + 10, y + yOffset, width - 20, "left")
+    if selectedPlanet.mass <= 0.012 then
+        love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass * 833.33333333) .. " M☾", x + 10, y + yOffset, width - 20, "left") end
+    if selectedPlanet.mass > 0.012 and selectedPlanet.mass <= 1 then
+        love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass * 10) .. " M🜨", x + 10, y + yOffset, width - 20, "left") end
+    if selectedPlanet.mass > 1 then
+        love.graphics.printf("Mass: " .. string.format("%.2f", selectedPlanet.mass * 0.03145583914) .. " M♃", x + 10, y + yOffset, width - 20, "left") end
     yOffset = yOffset + 20
 
     font = love.graphics.setFont(txFont, 15)
