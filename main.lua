@@ -1,5 +1,6 @@
 local Planet = require("main/planet")
 local Camera = require("main/camera")
+local Satellite = require("main/satellite")
 local PlanetMenu = require("menu/planet_menu")
 local MainMenu = require("menu/main_menu")
 local TimeController = require("main/time_controller")
@@ -9,6 +10,7 @@ local gameState = "main_menu" -- Default game state
 local windowWidth, windowHeight = love.graphics.getDimensions()
 planets = {}
 local camera = Camera.new()
+local satellites = {}
 local timeController = TimeController.new()
 
 function love.load()
@@ -71,7 +73,12 @@ function love.update(dt)
         for _, planet in ipairs(planets) do
             planet:update(adjustedDt)
         end
-        
+
+        -- Update all satellites
+        for _, satellite in ipairs(satellites) do
+            satellite:update(adjustedDt)
+        end
+
         -- Update mouse position for zoom functionality
         camera:updateMousePosition()
     end
@@ -114,6 +121,13 @@ function love.mousepressed(x, y, button)
             end
 
             camera:startDragging(x, y)
+        elseif button == 2 then -- Right-click to add a satellite
+            for _, planet in ipairs(planets) do
+                if planet:isClicked(worldX, worldY) then
+                    table.insert(satellites, Satellite.new(planet))
+                    return
+                end
+            end
         end
     end
 end
@@ -148,10 +162,14 @@ function love.draw()
             planet:draw(camera)
         end
 
+        -- Draw all satellites
+        for _, satellite in ipairs(satellites) do
+            satellite:draw()
+        end
+
         camera:reset()
 
         -- Draw the planet info screen if open
         PlanetMenu.draw()
     end
 end
-
