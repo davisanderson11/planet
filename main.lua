@@ -164,7 +164,7 @@ function love.draw()
 
         -- Draw all satellites
         for _, satellite in ipairs(satellites) do
-            satellite:draw()
+            satellite:draw(camera)
         end
 
         camera:reset()

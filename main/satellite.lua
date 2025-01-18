@@ -41,9 +41,9 @@ function Satellite.spawnIfClicked(planets, mouseX, mouseY)
 end
 
 -- Draw the satellite
-function Satellite:draw()
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.circle("fill", self.x, self.y, 0.1) -- Small satellite dot
+function Satellite:draw(camera)
+    love.graphics.setColor(0, 1, 0)
+    love.graphics.circle("fill", self.x, self.y, 5/camera.scale, 3) -- Small satellite dot
     love.graphics.setColor(1, 1, 1, 1)
 end
 
