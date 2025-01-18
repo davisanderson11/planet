@@ -1,6 +1,11 @@
 local Satellite = {}
 Satellite.__index = Satellite
 
+local satelliteData = {
+    orbiter = {1},
+    freighter = {2},
+}
+
 function Satellite.new(planet)
     local self = setmetatable({}, Satellite)
 
@@ -31,6 +36,7 @@ end
 
 -- Moves satellite toward the new planet
 function Satellite:moveToPlanet(dt)
+    self.selected = false
     local dx = self.targetPlanet.x - self.x
     local dy = self.targetPlanet.y - self.y
     local distance = math.sqrt(dx * dx + dy * dy)

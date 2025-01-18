@@ -3,6 +3,7 @@ local Camera = require("main/camera")
 local Satellite = require("main/satellite")
 local PlanetMenu = require("menu/planet_menu")
 local MainMenu = require("menu/main_menu")
+local SatelliteMenu = require("menu/satellite_menu")
 local TimeController = require("main/time_controller")
 
 local gameState = "main_menu" -- Default game state
@@ -117,6 +118,7 @@ function love.mousepressed(x, y, button)
             for _, satellite in ipairs(satellites) do
                 if satellite:isClicked(worldX, worldY, camera) then
                     selectedSatellite = satellite
+                    SatelliteMenu.open(selectedSatellite)
                     inputActive = true
                     inputText = ""
                     return
