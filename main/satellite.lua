@@ -43,6 +43,7 @@ function Satellite:moveToPlanet(dt)
         -- Arrived at new planet, switch to orbit
         self.center = self.targetPlanet
         self.radius = 4 * self.targetPlanet.radius
+        self.speed = 1 / self.radius
         self.angle = math.random(0, 2 * math.pi)
         self.targetPlanet = nil
         self.moving = false
@@ -51,10 +52,15 @@ end
 
 -- Detect click on the satellite
 function Satellite:isClicked(mouseX, mouseY, camera)
-    local scaledX = self.x
-    local scaledY = self.y
-    local distance = math.sqrt((mouseX - scaledX)^2 + (mouseY - scaledY)^2)
-    return distance <= 5
+    -- Convert mouse coordinates from screen space to world space
+    local worldX, worldY = camera:screenToWorld(mouseX, mouseY)
+
+    -- Compute distance in world space
+    local distance = math.sqrt((worldX - self.x)^2 + (worldY - self.y)^2)
+
+    self.selected = true
+
+    return distance <= (5 * camera.scale) -- Adjusted for scaling
 end
 
 function Satellite:setTargetPlanet(planet)
@@ -64,11 +70,8 @@ end
 
 function Satellite:draw(camera)
     love.graphics.setColor(0, 1, 0)
-    love.graphics.circle("fill", self.x, self.y, 1, 3)
-    if self.selected then
-        love.graphics.setColor(0, 1, 0)
-        love.graphics.circle("line", self.x, self.y, 1, 3)
-    end
+    if self.selected then love.graphics.setColor (1, 0, 0) end
+    love.graphics.circle("fill", self.x, self.y, 5 / camera.scale, 3)
     love.graphics.setColor(1, 1, 1)
 end
 

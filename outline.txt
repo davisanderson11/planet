@@ -7,7 +7,6 @@ Star map
 -Later-
 yyyy-mm-dd time tracker
 Satellites and other launchable craft
-Satellite "orbit" behavior
 Orbit selector for launched craft
 Population tracker
 Civilization scale tracker
