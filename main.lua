@@ -13,6 +13,10 @@ local camera = Camera.new()
 local satellites = {}
 local timeController = TimeController.new()
 
+local selectedSatellite = nil
+local inputActive = false
+local inputText = ""
+
 function love.load()
     -- Set up window
     window = {translateX = 40, translateY = 40, scale = 1, windowWidth = 1920, windowHeight = 1080}
@@ -84,17 +88,6 @@ function love.update(dt)
     end
 end
 
-function love.keypressed(key)
-    if key == "=" then -- Increase speed
-        timeController:increaseSpeed()
-    elseif key == "-" then -- Decrease speed
-        timeController:decreaseSpeed()
-    elseif key == "0" then -- Reset speed
-        timeController:resetSpeed()
-    end
-end
-
-
 function love.mousepressed(x, y, button)
     if gameState == "main_menu" then
         local action = MainMenu.mousepressed(x, y, button)
@@ -112,7 +105,7 @@ function love.mousepressed(x, y, button)
 
         local worldX, worldY = camera:screenToWorld(x, y)
 
-        if button == 1 then
+        if button == 1 then -- Left-click for planet menu or satellite selection
             for _, planet in ipairs(planets) do
                 if planet:isClicked(worldX, worldY) then
                     PlanetMenu.open(planet)
@@ -120,7 +113,18 @@ function love.mousepressed(x, y, button)
                 end
             end
 
+            -- Check if a satellite is clicked
+            for _, satellite in ipairs(satellites) do
+                if satellite:isClicked(worldX, worldY, camera) then
+                    selectedSatellite = satellite
+                    inputActive = true
+                    inputText = ""
+                    return
+                end
+            end
+
             camera:startDragging(x, y)
+
         elseif button == 2 then -- Right-click to add a satellite
             for _, planet in ipairs(planets) do
                 if planet:isClicked(worldX, worldY) then
@@ -129,6 +133,39 @@ function love.mousepressed(x, y, button)
                 end
             end
         end
+    end
+end
+
+function love.keypressed(key)
+    if inputActive then
+        if key == "return" then
+            -- Find the planet with the entered name
+            for _, planet in ipairs(planets) do
+                if planet.name:lower() == inputText:lower() then
+                    selectedSatellite:setTargetPlanet(planet)
+                    break
+                end
+            end
+            inputActive = false
+        elseif key == "backspace" then
+            inputText = inputText:sub(1, -2)
+        elseif key == "escape" then
+            inputActive = false
+        end
+    else
+        if key == "=" then -- Increase speed
+            timeController:increaseSpeed()
+        elseif key == "-" then -- Decrease speed
+            timeController:decreaseSpeed()
+        elseif key == "0" then -- Reset speed
+            timeController:resetSpeed()
+        end
+    end
+end
+
+function love.textinput(text)
+    if inputActive then
+        inputText = inputText .. text
     end
 end
 
@@ -150,7 +187,6 @@ function love.wheelmoved(x, y)
     end
 end
 
-
 function love.draw()
     if gameState == "main_menu" then
         MainMenu.draw()
@@ -171,5 +207,14 @@ function love.draw()
 
         -- Draw the planet info screen if open
         PlanetMenu.draw()
+
+        -- Draw input box if satellite renaming is active
+        if inputActive then
+            love.graphics.setColor(0, 0, 0, 0.8)
+            love.graphics.rectangle("fill", 200, 300, 400, 50)
+            love.graphics.setColor(1, 1, 1)
+            love.graphics.rectangle("line", 200, 300, 400, 50)
+            love.graphics.print("Enter planet name: " .. inputText, 210, 320)
+        end
     end
 end
