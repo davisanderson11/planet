@@ -6,25 +6,25 @@ function Satellite.new(planet)
     local self = setmetatable({}, Satellite)
 
     -- Set initial position at 4 * planet radius away
-    self.orbit_center = planet
-    self.orbit_radius = 4 * planet.radius
-    self.orbit_angle = math.random(0, 2 * math.pi)
-    self.orbit_speed = 1/self.orbit_radius -- Match the planet's velocity
+    self.center = planet
+    self.radius = 4 * planet.radius
+    self.angle = math.random(0, 2 * math.pi)
+    self.speed = 1/self.radius -- Match the planet's velocity
 
     -- Calculate initial position
-    self.x = planet.x + self.orbit_radius * math.cos(self.orbit_angle)
-    self.y = planet.y + self.orbit_radius * math.sin(self.orbit_angle)
+    self.x = planet.x + self.radius * math.cos(self.angle)
+    self.y = planet.y + self.radius * math.sin(self.angle)
 
     return self
 end
 
 -- Update satellite position to maintain circular orbit
 function Satellite:update(dt)
-    if self.orbit_center then
+    if self.center then
         -- Keep the satellite in a circular orbit
-        self.orbit_angle = self.orbit_angle + self.orbit_speed * dt
-        self.x = self.orbit_center.x + self.orbit_radius * math.cos(self.orbit_angle)
-        self.y = self.orbit_center.y + self.orbit_radius * math.sin(self.orbit_angle)
+        self.angle = self.angle + self.speed * dt
+        self.x = self.center.x + self.radius * math.cos(self.angle)
+        self.y = self.center.y + self.radius * math.sin(self.angle)
     end
 end
 
